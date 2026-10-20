@@ -1,0 +1,2193 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 3,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "dammweg_dashboard",
+      "tooltip": "",
+      "type": "dashboards",
+      "url": ""
+    }
+  ],
+  "panels": [
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "cel3b2nlrivpcc"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "current"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "amp"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "power_kw"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "watt"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "total_kwh"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "kwatth"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "uptime_s"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "voltage"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "volt"
+              }
+            ]
+          },
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "measurement power_kw"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 27,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"tasmota_990CEB\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"measurement\" and\r\n    r._field == \"current\" or\r\n    r._field == \"total_kwh\" or  r._field == \"voltage\" or  r._field == \"power_kw\" or  r._field == \"uptime_s\"\r\n  )\r\n  |> aggregateWindow(every: 60s, fn: mean)",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cel3b2nlrivpcc"
+          },
+          "hide": false,
+          "query": "from(bucket: \"tasmota_991420\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"measurement\" and\r\n    r._field == \"current\" or\r\n    r._field == \"total_kwh\" or  r._field == \"voltage\" or  r._field == \"power_kw\" or  r._field == \"uptime_s\"\r\n  )\r\n  |> aggregateWindow(every: 60s, fn: mean)",
+          "refId": "B"
+        }
+      ],
+      "title": "Stromverbrauch",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "cel3b2nlrivpcc"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "temp_sensor_9e2118_C"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Außen_0x9e2118"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "temp_sensor_93982118_C"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Biofilter_0x93982118(feststoff während behandlung))"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "temp_sensor_699f2118_C"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "innen_luft?_0x699f2118"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "temp_sensor_29f2118_C"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "dwc_0x29f2118"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "temp_sensor_f2982118_C"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "fisch_0xf2982118"
+              }
+            ]
+          },
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "fisch_0xf2982118",
+                  "Biofilter_0x93982118(feststoff während behandlung))"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 24,
+        "x": 0,
+        "y": 11
+      },
+      "id": 26,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "hide": true,
+          "query": "from(bucket: \"2C:F4:32:0E:B0:05\")\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\n  |> filter(fn: (r) =>\n    r._measurement == \"measurements\" and\n    ((r._field =~ /temp_sensor/) or \n    (r._field == \"pressure_temperature_C\"))\n  )\n //|> aggregateWindow(every: 10s, fn: mean)",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cel3b2nlrivpcc"
+          },
+          "hide": false,
+          "query": "from(bucket: \"48:E7:29:43:32:17\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"measurements\" and\r\n    ((r._field =~ /temp_sensor/) or \r\n    (r._field == \"pressure_temperature_C\"))\r\n  )\r\n //|> aggregateWindow(every: 10s, fn: mean)",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cel3b2nlrivpcc"
+          },
+          "hide": false,
+          "query": "from(bucket: \"B4:E6:2D:3D:91:4B\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"measurements\" and\r\n    ((r._field =~ /temp_sensor/) or \r\n    (r._field == \"pressure_temperature_C\"))\r\n  )\r\n //|> aggregateWindow(every: 10s, fn: mean)",
+          "refId": "C"
+        }
+      ],
+      "title": "Temperatur",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "cel3b2nlrivpcc"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "hum_humidity_perc"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "hum_temperature_C"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "celsius"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "pressure_MS5837_pressure_mbar"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "pressurembar"
+              },
+              {
+                "id": "decimals",
+                "value": 5
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "pressure_hose_raw_nV"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              }
+            ]
+          },
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "pressure_ambient_ubar {SSID=\"YoungArtsDammweg_SCF\", git=\"ffdb268\", mac=\"48:E7:29:43:32:17\", modbus=\"4\"}"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 24
+      },
+      "id": 25,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cel3b2nlrivpcc"
+          },
+          "hide": false,
+          "query": " div1000 = (tables=<-) => tables\r\n  |> map(fn: (r) => ({r with _value: float(v: r._value) /1000.0}))\r\n\r\n\r\nfrom(bucket: \"48:E7:29:43:32:17\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"measurements\" and\r\n    (r._field == \"pressure_hose_raw_nV\") or \r\n    (r._field == \"pressure_ambient_ubar\")\r\n  )\r\n  |> div1000()\r\n  //|> aggregateWindow(every: 600s, fn: mean)",
+          "refId": "D"
+        }
+      ],
+      "title": "druck",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "cel3b2nlrivpcc"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "hum_humidity_perc"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "hum_temperature_C"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "celsius"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "pressure_MS5837_pressure_mbar"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "pressurembar"
+              },
+              {
+                "id": "decimals",
+                "value": 5
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "pressure_hose_raw_nV"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              }
+            ]
+          },
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "pressure_MS5837_pressure_mbar {SSID=\"YoungArtsDammweg_SCF\", git=\"531442e\", mac=\"B4:E6:2D:3D:91:4B\", modbus=\"2\"}",
+                  "pressure_ambient_ubar {SSID=\"YoungArtsDammweg_SCF\", git=\"531442e\", mac=\"B4:E6:2D:3D:91:4B\", modbus=\"2\"}"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 33
+      },
+      "id": 28,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"B4:E6:2D:3D:91:4B\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"measurements\" and\r\n    r._field == \"hum_humidity_perc\" or\r\n    r._field == \"pressure_ambient_ubar\" or\r\n    r._field == \"hum_temperature_C\" or  r._field == \"pressure_MS5837_pressure_mbar\"\r\n  )\r\n  //|> aggregateWindow(every: 600s, fn: mean)",
+          "refId": "A"
+        }
+      ],
+      "title": "dwc druck(füllstand)",
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "lower",
+                  "options": {
+                    "value": "0"
+                  }
+                },
+                "fieldName": "pressure_MS5837_pressure_mbar {SSID=\"YoungArtsDammweg_SCF\", git=\"531442e\", mac=\"B4:E6:2D:3D:91:4B\", modbus=\"2\"}"
+              },
+              {
+                "config": {
+                  "id": "lower",
+                  "options": {
+                    "value": "40000"
+                  }
+                },
+                "fieldName": "pressure_ambient_ubar {SSID=\"YoungArtsDammweg_SCF\", git=\"531442e\", mac=\"B4:E6:2D:3D:91:4B\", modbus=\"2\"}"
+              },
+              {
+                "config": {
+                  "id": "greater",
+                  "options": {
+                    "value": "120"
+                  }
+                },
+                "fieldName": "hum_temperature_C {SSID=\"YoungArtsDammweg_SCF\", git=\"531442e\", mac=\"B4:E6:2D:3D:91:4B\", modbus=\"2\"}"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "100"
+                  }
+                },
+                "fieldName": "hum_humidity_perc {SSID=\"YoungArtsDammweg_SCF\", git=\"531442e\", mac=\"B4:E6:2D:3D:91:4B\", modbus=\"2\"}"
+              }
+            ],
+            "match": "any",
+            "type": "exclude"
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 42
+      },
+      "id": 24,
+      "panels": [],
+      "title": "Wasserstand",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "uid": "cel3b2nlrivpcc"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "displayName": "${__field.name}",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "cm"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "_value"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "cm"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 11,
+        "x": 0,
+        "y": 43
+      },
+      "id": 22,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "hide": false,
+          "query": "from(bucket: \"B4:E6:2D:3D:91:4B\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"measurements\" and\r\n    r._field == \"frequency_cap_depth_cm\"\r\n  )",
+          "refId": "A"
+        }
+      ],
+      "title": "capacitance (mean) cm",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "cel3b2nlrivpcc"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "displayName": "${__field.name}",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "cm"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 12,
+        "x": 11,
+        "y": 43
+      },
+      "id": 20,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "stdDev"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"B4:E6:2D:3D:91:4B\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"measurements\" and\r\n    r._field == \"frequency_cap_depth_cm\"\r\n  )",
+          "refId": "A"
+        }
+      ],
+      "title": "capacitance(stddev) raw",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "cel3b2nlrivpcc"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "displayName": "${__field.name}",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "wasserstand_sump_cm"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "cm"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "frequency_capacitance"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "Hz/20"
+              }
+            ]
+          },
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "frequency_cap_depth_cm"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 45
+      },
+      "id": 15,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "hide": true,
+          "query": "get_c_for_avg = (cap_digit) => {\nm=0.0009705821\nb=-19.1297717\n\n\n  cap = 1000000000.0/float(v: cap_digit)\n\treturn m*cap+b\n}\n\nfrom(bucket: \"B4:E6:2D:3D:91:4B\")\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\n  |> filter(fn: (r) =>\n    r._measurement == \"measurements\" and\n    r._field == \"frequency_capacitance\"\n  )\n\n //\n |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> map(fn: (r) => (\n      {r with _value:  get_c_for_avg(cap_digit: r.frequency_capacitance)}\n  ))\n  //|> aggregateWindow(every: 30s, fn: mean)\n    |> rename(\n        fn: (column) => {\n            _newColumnName = if column =~ /^_value/ then \"wasserstand_sump_cm\" else column\n            return _newColumnName\n        }\n    )",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cel3b2nlrivpcc"
+          },
+          "hide": false,
+          "query": "from(bucket: \"B4:E6:2D:3D:91:4B\")\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\n  |> filter(fn: (r) =>\n    r._measurement == \"measurements\" and\n    r._field == \"frequency_cap_depth_cm\"\n  )\n  // |> aggregateWindow(every: 20s, fn: mean)",
+          "refId": "B"
+        }
+      ],
+      "title": "Wasserstand_sump",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 57
+      },
+      "id": 13,
+      "panels": [],
+      "title": "EC / Flow",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "cel3b2nlrivpcc"
+      },
+      "description": "Interessant:\nhttps://www.aqion.de/site/130",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "displayName": "${__field.name}",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "temp_sensor_93982118_C"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "celsius"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ec_calibrated"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "uS/cm"
+              }
+            ]
+          },
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "ec_calibrated"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 58
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "hide": true,
+          "query": "from(bucket: \"B4:E6:2D:3D:91:4B\")\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\n  |> filter(fn: (r) =>\n    r._measurement == \"measurements\" and\n    r._field == \"ec_raw_uS\"\n  )\n   |> aggregateWindow(every: 60s, fn: mean)",
+          "refId": "ec_raw_uS"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cel3b2nlrivpcc"
+          },
+          "hide": true,
+          "query": "from(bucket: \"B4:E6:2D:3D:91:4B\")\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\n  |> filter(fn: (r) =>\n    r._measurement == \"measurements\" and\n    r._field == \"temp_sensor_1_C\"\n  )\n   |> aggregateWindow(every: 60s, fn: mean)",
+          "refId": "temp_sensor_1_C"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cel3b2nlrivpcc"
+          },
+          "hide": true,
+          "query": "from(bucket: \"B4:E6:2D:3D:91:4B\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"measurements\" and\r\n    r._field == \"temp_sensor_1_C\" or r._field == \"ec_raw_uS\"\r\n  )\r\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\r\n  |> map(fn: (r) => (\r\n      {r with _value:  r.ec_raw_uS / (1.0+ 0.019*(r.temp_sensor_1_C-25.0))})\r\n  )\r\n  |> aggregateWindow(every: 60s, fn: mean)\r\n    |> rename(\r\n        fn: (column) => {\r\n            _newColumnName = if column =~ /^_value/ then \"ec25_linear-model\" else column\r\n            return _newColumnName\r\n        },\r\n    )",
+          "refId": "ec_25_lin"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cel3b2nlrivpcc"
+          },
+          "hide": true,
+          "query": "import \"dict\"\r\nget_water_viskosity = (temperature) => {\r\n    viskosity_dict =\r\n        dict.fromList(\r\n            pairs: [\r\n\t\t\t\t{key:2  , value: 1.6736},\r\n\t\t\t\t{key:3  , value: 1.6191},\r\n\t\t\t\t{key:4  , value: 1.5674},\r\n\t\t\t\t{key:5  , value: 1.5182},\r\n\t\t\t\t{key:6  , value: 1.4716},\r\n\t\t\t\t{key:7  , value: 1.4272},\r\n\t\t\t\t{key:8  , value: 1.3849},\r\n\t\t\t\t{key:9  , value: 1.3447},\r\n\t\t\t\t{key:10 , value: 1.3063},\r\n\t\t\t\t{key:11 , value: 1.2696},\r\n\t\t\t\t{key:12 , value: 1.2347},\r\n\t\t\t\t{key:13 , value: 1.2012},\r\n\t\t\t\t{key:14 , value: 1.1692},\r\n\t\t\t\t{key:15 , value: 1.1386},\r\n\t\t\t\t{key:16 , value: 1.1092},\r\n\t\t\t\t{key:17 , value: 1.0811},\r\n\t\t\t\t{key:18 , value: 1.0541},\r\n\t\t\t\t{key:19 , value: 1.0282},\r\n\t\t\t\t{key:20 , value: 1.0034},\r\n\t\t\t\t{key:21 , value: 0.9795},\r\n\t\t\t\t{key:22 , value: 0.9565},\r\n\t\t\t\t{key:23 , value: 0.9344},\r\n\t\t\t\t{key:24 , value: 0.9131},\r\n\t\t\t\t{key:25 , value: 0.8926},\r\n\t\t\t\t{key:26 , value: 0.8729},\r\n\t\t\t\t{key:27 , value: 0.8539},\r\n\t\t\t\t{key:28 , value: 0.8355},\r\n\t\t\t\t{key:29 , value: 0.8178},\r\n\t\t\t\t{key:30 , value: 0.8007},\r\n\t\t\t\t{key:31 , value: 0.7842},\r\n\t\t\t\t{key:32 , value: 0.7682},\r\n\t\t\t\t{key:33 , value: 0.7528},\r\n\t\t\t\t{key:34 , value: 0.7379},\r\n\t\t\t\t{key:35 , value: 0.7234},\r\n\t\t\t\t{key:36 , value: 0.7095},\r\n\t\t\t\t{key:37 , value: 0.6959},\r\n\t\t\t\t{key:38 , value: 0.6828},\r\n\t\t\t\t{key:39 , value: 0.6702},\r\n\t\t\t\t{key:40 , value: 0.6579},\r\n\t\t\t\t{key:45 , value: 0.6017},\r\n\t\t\t\t{key:50 , value: 0.5531},\r\n\t\t\t\t{key:55 , value: 0.5109},\r\n\t\t\t\t{key:60 , value: 0.474 },\r\n\t\t\t\t{key:65 , value: 0.4415}\r\n            ],\r\n        )\r\n\t\t//value:  [mm²/s] \r\n\t\t//https://wiki.anton-paar.com/en/water/\r\n    viskosity = dict.get(dict: viskosity_dict, key: temperature, default: 1.0)\r\n\r\n    return viskosity\r\n}\r\n\r\nget_compensated_value = (temperature, ec) => {\r\n\tt20 = temperature-20.0\r\n\tA = 1.37023 * t20 + float(v: \"8.36e-4\")*(t20^2.0)\r\n\tB = 109.0 + temperature\r\n\t\r\n\tC = 0.889 * 10.0^(A/B)\r\n\tec_25 = ec / C\r\n\treturn ec_25\r\n}\r\n\r\nfrom(bucket: \"B4:E6:2D:3D:91:4B\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"measurements\" and\r\n    r._field == \"temp_sensor_1_C\" or r._field == \"ec_raw_uS\"\r\n  )\r\n\t|> aggregateWindow(every: 5m, fn: mean)\r\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\r\n  |> map(fn: (r) => (\r\n      {r with _value:  get_compensated_value(ec: r.ec_raw_uS, temperature: r.temp_sensor_1_C)}\r\n  ))\r\n\r\n    |> rename(\r\n        fn: (column) => {\r\n            _newColumnName = if column =~ /^_value/ then \"ec25_non-linear-model\" else column\r\n            return _newColumnName\r\n        },\r\n    )\r\n",
+          "refId": "ec_25_nonlin"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cel3b2nlrivpcc"
+          },
+          "hide": true,
+          "query": "\r\nget_compensated_value = (temperature, ec) => {\r\n\tt20 = temperature-20.0\r\n\tA = 1.37023 * t20 + float(v: \"8.36e-4\")*(t20^2.0)\r\n\tB = 109.0 + temperature\r\n\t\r\n\tC = 0.889 * 10.0^(A/B)\r\n\tec_25 = ec / C\r\n\treturn ec_25\r\n}\r\n\r\nget_calibrated_value = (temperature, ec) => {\r\n  ec_25_raw = get_compensated_value(ec: ec, temperature: temperature)\r\n  //https://aquaponix.webo.family/index.php/apps/files/files/12960?dir=/aquaponics/System/System_SCF/iot&openfile=true\r\n\t//m = 0.367082887\r\n  //b = -159.604669\r\n  m = 0.296556512 //neue Koeffizienten ab 7.8.2025 / 11:07\r\n  b = -17.40116689\r\n\treturn ec_25_raw*m+b\r\n}\r\n\r\nfrom(bucket: \"B4:E6:2D:3D:91:4B\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"measurements\" and\r\n    r._field == \"temp_sensor_1_C\" or r._field == \"ec_raw_uS\"\r\n  )\r\n\t|> aggregateWindow(every: 5m, fn: mean)\r\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\r\n  |> map(fn: (r) => (\r\n      {r with _value:  get_calibrated_value(ec: r.ec_raw_uS, temperature: r.temp_sensor_1_C)}\r\n  ))\r\n\r\n    |> rename(\r\n        fn: (column) => {\r\n            _newColumnName = if column =~ /^_value/ then \"ec25_non-linear-model_calibrated\" else column\r\n            return _newColumnName\r\n        },\r\n    )\r\n",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cel3b2nlrivpcc"
+          },
+          "hide": false,
+          "query": "from(bucket: \"48:E7:29:43:32:17\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"measurements\" and r._field == \"ec_raw_uS\" or r._field == \"ec_calibrated\"\r\n  )\r\n\t|> aggregateWindow(every: 5m, fn: mean)\r\n\r\n",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cel3b2nlrivpcc"
+          },
+          "hide": false,
+          "query": "from(bucket: \"48:E7:29:43:32:17\")\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\n  |> filter(fn: (r) =>\n    r._measurement == \"measurements\" and\n    (r._field == \"temp_sensor_93982118_C\")\n  )",
+          "refId": "C"
+        }
+      ],
+      "title": "EC",
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "lower",
+                  "options": {
+                    "value": "-0"
+                  }
+                },
+                "fieldName": "temp_sensor_1_C {SSID=\"YoungArtsDammweg_SCF\", git=\"5cfc361\", mac=\"B4:E6:2D:3D:91:4B\", modbus=\"2\", temp_sensor_ID0=\"939821\", temp_sensor_ID1=\"9e21\", temp_sensor_ID2=\"29f21\", temp_sensor_ID3=\"699f21\"}"
+              },
+              {
+                "config": {
+                  "id": "lower",
+                  "options": {
+                    "value": "-0"
+                  }
+                },
+                "fieldName": "temp_sensor_1_C {SSID=\"YoungArtsDammweg_SCF\", git=\"5cfc361\", mac=\"B4:E6:2D:3D:91:4B\", modbus=\"2\", temp_sensor_ID0=\"f29821\", temp_sensor_ID1=\"939821\", temp_sensor_ID2=\"9e21\", temp_sensor_ID3=\"29f21\", temp_sensor_ID4=\"699f21\"}"
+              }
+            ],
+            "match": "any",
+            "type": "exclude"
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "cel3b2nlrivpcc"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "left",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "degree"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "tilt_0_roll_var"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "left"
+              },
+              {
+                "id": "unit",
+                "value": "°"
+              },
+              {
+                "id": "custom.axisSoftMin",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "tilt_0_roll"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "tilt_0_roll_var_max"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "left"
+              },
+              {
+                "id": "unit",
+                "value": "degree"
+              },
+              {
+                "id": "custom.axisSoftMin",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 24,
+        "x": 0,
+        "y": 65
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "hide": true,
+          "query": "from(bucket: \"B4:E6:2D:3D:91:4B\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"measurements\" and\r\n    r._field == \"tilt_0_roll\" or\r\n    r._field == \"tilt_0_roll_var\" or r._field == \"tilt_0_roll_var_max\"\r\n  )\r\n // |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:r._field}))\r\n //  |> aggregateWindow(every: 60s, fn: mean)",
+          "refId": "flow"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cel3b2nlrivpcc"
+          },
+          "hide": true,
+          "query": "from(bucket: \"B4:E6:2D:3D:91:4B\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"measurements\" and\r\n    r._field == \"tilt_0_roll\"\r\n  )\r\n  |> aggregateWindow(every: 60s, fn: stddev)\r\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:r._field}))\r\n  |> set(key: \"_field\", value: \"stddev\")",
+          "refId": "stddev"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cel3b2nlrivpcc"
+          },
+          "hide": true,
+          "query": "from(bucket: \"B4:E6:2D:3D:91:4B\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"measurements\" and\r\n    r._field == \"tilt_0_roll\"\r\n  )\r\n  |> aggregateWindow(every: 20s, fn: mean)\r\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:r._field}))\r\n  |> set(key: \"_field\", value: \"mean\")",
+          "refId": "mean"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cel3b2nlrivpcc"
+          },
+          "hide": false,
+          "query": "from(bucket: \"48:E7:29:43:32:17\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"measurements\" and\r\n    r._field == \"tilt_0_roll\" or\r\n    r._field == \"tilt_0_roll_var\" or r._field == \"tilt_0_roll_var_max\"\r\n  )\r\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:r._field}))\r\n //  |> aggregateWindow(every: 60s, fn: mean)",
+          "refId": "A"
+        }
+      ],
+      "title": "flow",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 76
+      },
+      "id": 11,
+      "panels": [],
+      "title": "Daten",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "cel3b2nlrivpcc"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "displayName": "${__field.name}",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "turbidity_raw"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 77
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "hide": true,
+          "query": "from(bucket: \"B4:E6:2D:3D:91:4B\")\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\n  |> filter(fn: (r) =>\n    r._measurement == \"measurements\" and\n    r._field == \"turbidity_raw\" or r._field == \"turbidity_bright\" or r._field == \"turbidity_dark\"\n\n  )\n   |> aggregateWindow(every: 20s, fn: mean)",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cel3b2nlrivpcc"
+          },
+          "hide": false,
+          "query": "from(bucket: \"48:E7:29:43:32:17\")\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\n  |> filter(fn: (r) =>\n    r._measurement == \"measurements\" and\n    r._field == \"turbidity_raw\" or r._field == \"turbidity_bright\" or r._field == \"turbidity_dark\"\n\n  )\n //  |> aggregateWindow(every: 20s, fn: mean)",
+          "refId": "B"
+        }
+      ],
+      "title": "Wassertransparenz, Feststofffilter",
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "lower",
+                  "options": {
+                    "value": "10"
+                  }
+                },
+                "fieldName": "turbidity_raw {SSID=\"YoungArtsDammweg_SCF\", git=\"4ff7e2f\", mac=\"B4:E6:2D:3D:91:4B\", modbus=\"2\"}"
+              },
+              {
+                "config": {
+                  "id": "lower",
+                  "options": {
+                    "value": "10"
+                  }
+                },
+                "fieldName": "turbidity_raw {SSID=\"YoungArtsDammweg_SCF\", git=\"4ff7e2f\", mac=\"B4:E6:2D:3D:91:4B\", modbus=\"2\", temp_sensor_ID0=\"f29821\", temp_sensor_ID1=\"939821\", temp_sensor_ID2=\"9e21\", temp_sensor_ID3=\"29f21\", temp_sensor_ID4=\"699f21\"}"
+              },
+              {
+                "config": {
+                  "id": "lower",
+                  "options": {
+                    "value": "10"
+                  }
+                },
+                "fieldName": "turbidity_raw {SSID=\"YoungArtsDammweg_SCF\", git=\"902ecc8\", mac=\"B4:E6:2D:3D:91:4B\", modbus=\"2\", temp_sensor_ID0=\"f29821\", temp_sensor_ID1=\"939821\", temp_sensor_ID2=\"9e21\", temp_sensor_ID3=\"29f21\", temp_sensor_ID4=\"699f21\"}"
+              }
+            ],
+            "match": "any",
+            "type": "exclude"
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "cel3b2nlrivpcc"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "displayName": "${__field.name}",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ambient_light_data_ir"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 86
+      },
+      "id": 9,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"B4:E6:2D:3D:91:4B\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"measurements\" and\r\n    r._field == \"ambient_light_data_ir\" or \r\n    r._field == \"ambient_light_data_vis\"\r\n  )\r\n //|> aggregateWindow(every: 20s, fn: mean)",
+          "refId": "A"
+        }
+      ],
+      "title": "Ambient light",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "cel3b2nlrivpcc"
+      },
+      "description": "Noch kein Sensor angeschlossen",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "displayName": "${__field.name}",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "mvolt"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ph_cal"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ph"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "temp_sensor_93982118_C"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "celsius"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "pressure_temperature_C"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "celsius"
+              }
+            ]
+          },
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "ph_cal"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 94
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"48:E7:29:43:32:17\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"measurements\" and\r\n    r._field == \"ph_raw_mV\" or\r\n    r._field == \"ph_cal\" or \r\n    r._field == \"orp_cal\" or\r\n    r._field == \"orp_raw_mV\"\r\n  )\r\n //  |> aggregateWindow(every: 20s, fn: mean)",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cel3b2nlrivpcc"
+          },
+          "hide": false,
+          "query": "from(bucket: \"48:E7:29:43:32:17\")\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\n  |> filter(fn: (r) =>\n    r._measurement == \"measurements\" and\n    (r._field == \"temp_sensor_93982118_C\") or\n    (r._field == \"pressure_temperature_C\")\n  )",
+          "refId": "B"
+        }
+      ],
+      "title": "PH / ORP",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 102
+      },
+      "id": 14,
+      "panels": [],
+      "title": "Sensor Housekeeping",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "cel3b2nlrivpcc"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "displayName": "${__field.name}",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "mvolt"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Uptime_ms"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ms"
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 24,
+        "x": 0,
+        "y": 103
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"B4:E6:2D:3D:91:4B\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"measurements\" and\r\n    r._field == \"supply_voltage_mV\" or\r\n    r._field == \"Uptime_ms\"\r\n  )\r\n  // |> aggregateWindow(every: 20s, fn: mean)",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cel3b2nlrivpcc"
+          },
+          "hide": false,
+          "query": "from(bucket: \"48:E7:29:43:32:17\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"measurements\" and\r\n    r._field == \"supply_voltage_mV\" or\r\n    r._field == \"Uptime_ms\"\r\n  )\r\n  // |> aggregateWindow(every: 120s, fn: mean)",
+          "refId": "B"
+        }
+      ],
+      "title": "Supply Voltage",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "cel3b2nlrivpcc"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "dBm"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 108
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"B4:E6:2D:3D:91:4B\")\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\n  |> filter(fn: (r) =>\n    r._measurement == \"measurements\" and\n    r._field == \"wifi rssi\"\n  )\n   |> aggregateWindow(every: 20s, fn: mean)",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cel3b2nlrivpcc"
+          },
+          "hide": false,
+          "query": "from(bucket: \"48:E7:29:43:32:17\")\r\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\r\n  |> filter(fn: (r) =>\r\n    r._measurement == \"measurements\" and\r\n    r._field == \"wifi rssi\"\r\n  )\r\n   //|> aggregateWindow(every: 120s, fn: mean)",
+          "refId": "B"
+        }
+      ],
+      "title": "WLAN",
+      "type": "timeseries"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 41,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-7d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Dammweg",
+  "uid": "d6b3d886-4add-44e5-ad8f-c583c68a34b5",
+  "version": 129
+}
