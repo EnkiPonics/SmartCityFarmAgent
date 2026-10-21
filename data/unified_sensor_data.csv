@@ -1,4 +1,4 @@
-Time,ec_calibrated,ec_raw_uS,temp_sensor_93982118_C_ec,orp_raw_mV,ph_cal,ph_raw_mV,pressure_temperature_C,temp_sensor_93982118_C_ph,"pressure_temperature_C_{SSID=""YoungArtsDammweg_SCF"",_git=""ffdb268"",_mac=""48:E7:29:43:32:17"",_modbus=""4"",_name=""measurements""}",innen_luft?_0x699f2118,Biofilter_0x93982118(feststoff_während_behandlung)),Außen_temp_0x9e2118,dwc_temp_0x29f2118
+Time,ec_calibrated,ec_raw_uS,temp_sensor_93982118_C_ec,orp_raw_mV,ph_cal,ph_raw_mV,pressure_temperature_C,temp_sensor_93982118_C_ph,"pressure_temperature_C_{SSID=""YoungArtsDammweg_SCF"",_git=""ffdb268"",_mac=""48:E7:29:43:32:17"",_modbus=""4"",_name=""measurements""}",innen_luft?_0x699f2118,Biofilter_0x93982118(feststoff_während_behandlung)),Außen_0x9e2118,dwc_0x29f2118
 2026-10-13 21:32:06,,,,,,,,,,,,,13.2 °C
 2026-10-13 21:32:25,,,12.6 °C,,,,17.3 °C,12.6 °C,17.3 °C,12.8 °C,12.6 °C,12.9 °C,
 2026-10-13 21:33:45,,,,,,,,,,,,,13.2 °C
