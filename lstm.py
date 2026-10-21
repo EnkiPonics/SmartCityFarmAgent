@@ -1,12 +1,17 @@
-import pandas as pd
-import numpy as np
+import sys
 from pathlib import Path
 
-from ..lstm.src.workflows import (
+# Add parent directory to path to allow imports from sibling packages
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+import pandas as pd
+import numpy as np
+
+from lstm.src.workflows import (
     LstmOnlineLearningFineTuningWorkflow,
     DataPrepConfig, TrainingConfig
 )
-from ..lstm.src.jobs import load_lstm_model, load_and_process_data
+from lstm.src.jobs import load_lstm_model, load_and_process_data
 
 def lstm_online_learning_initial_training(selected):
     """Run LstmOnlineLearningFineTuningWorkflow: initial model training."""
@@ -218,7 +223,7 @@ def lstm_online_learning_future_predictions(selected):
     Path(future_plot_file).unlink()     
 
 
-target_list = ['Time', 'ec_calibrated', 'orp_raw_mV', 'ph_cal', 'pressure_temperature_C', 'temp_sensor_C_ph',"pressure_temperature_C_{SSID=\"YoungArtsDammweg_SCF\",_git=\"ffdb268\",_mac=\"48:E7:29:43:32:17\",_modbus=\"4\",_name=\"measurements\"}", 'innen_luft_C', 'Biofilter_temp_C', 'Außen_temp_C', 'dwc_temp_C']
+target_list = ['Time', 'ec_calibrated']#, 'orp_raw_mV', 'ph_cal', 'pressure_temperature_C', 'temp_sensor_C_ph',"pressure_temperature_C_{SSID=\"YoungArtsDammweg_SCF\",_git=\"ffdb268\",_mac=\"48:E7:29:43:32:17\",_modbus=\"4\",_name=\"measurements\"}", 'innen_luft_C', 'Biofilter_temp_C', 'Außen_temp_C', 'dwc_temp_C']
 for target in target_list[1:]:
     selected = [target_list[0], target]
     lstm_online_learning_initial_training(selected)
