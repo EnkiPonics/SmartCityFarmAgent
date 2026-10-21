@@ -1,27 +1,22 @@
 import pandas as pd
 import numpy as np
-import sys
 from pathlib import Path
-from importlib import import_module
 
-_workflows = import_module("workflows")
-LstmOnlineLearningFineTuningWorkflow = _workflows.LstmOnlineLearningFineTuningWorkflow
-DataPrepConfig = _workflows.DataPrepConfig
-TrainingConfig = _workflows.TrainingConfig
-_jobs = import_module("jobs")
-load_lstm_model = _jobs.load_lstm_model
-load_and_process_data = _jobs.load_and_process_data
+from ..lstm.src.workflows import (
+    LstmOnlineLearningFineTuningWorkflow,
+    DataPrepConfig, TrainingConfig
+)
+from ..lstm.src.jobs import load_lstm_model, load_and_process_data
 
-def lstm_online_learning_initial_training(example_data):
-    """Test OnlineLearningFineTuningWorkflow: initial model training."""
-    csv_file = example_data / "shahala_data.csv"
-    smoke_csv = example_data / "aquaponics_smoke_online_learning_initial.csv"
-    plot_file = example_data / "aquaponics_pred_vs_expected_online_ini_predicted.png"
-    parity_plot_file = example_data / "aquaponics_parity_plot_online_ini_predicted.png"
-    scaled_plot_file = example_data / "aquaponics_scaled_plot_online_ini_predicted.png"
-    model_file = example_data / "aquaponics_lstm_model_online_learning.keras"
+def lstm_online_learning_initial_training(selected):
+    """Run LstmOnlineLearningFineTuningWorkflow: initial model training."""
+    csv_file = "osi-hackathon/data/homogenized_sensor_data.csv"
+    smoke_csv = "osi-hackathon/data/aquaponics_smoke_online_learning_initial.csv"
+    plot_file = "osi-hackathon/data/aquaponics_pred_vs_expected_online_ini_predicted.png"
+    parity_plot_file = "osi-hackathon/data/aquaponics_parity_plot_online_ini_predicted.png"
+    scaled_plot_file = "osi-hackathon/data/aquaponics_scaled_plot_online_ini_predicted.png"
+    model_file = "osi-hackathon/data/aquaponics_lstm_model_online_learning.keras"
     
-    selected = ['Time', 'ec_calibrated', 'orp_raw_mV', 'ph_cal', 'pressure_temperature_C', 'temp_sensor_C_ph',"pressure_temperature_C_{SSID=\"YoungArtsDammweg_SCF\",_git=\"ffdb268\",_mac=\"48:E7:29:43:32:17\",_modbus=\"4\",_name=\"measurements\"}", 'innen_luft_C', 'Biofilter_temp_C', 'Außen_temp_C', 'dwc_temp_C']
     pd.read_csv(csv_file, usecols=selected).head(500).to_csv(smoke_csv, index=False)
     
     data_prep_config = DataPrepConfig(train_split=0.8, timesteps=75)
@@ -45,7 +40,6 @@ def lstm_online_learning_initial_training(example_data):
         scaled_plot_output_path=scaled_plot_file,
         seed=42,
     )
-    
     # First run: initialize and train new model
     result = workflow.run(
         file_path=str(smoke_csv),
@@ -57,7 +51,7 @@ def lstm_online_learning_initial_training(example_data):
     
     # Assertions
     assert result["model_existed"] is False
-    assert model_file.exists()
+    assert Path(model_file).exists()
     assert result["model"] is not None
     assert isinstance(result["loss"], float)
     assert result["loss"] > 0
@@ -76,21 +70,21 @@ def lstm_online_learning_initial_training(example_data):
     assert not np.isnan(predictions).any()
     
     # Cleanup
-    model_file.unlink()
-    smoke_csv.unlink()
+    Path(model_file).unlink()
+    Path(smoke_csv).unlink()
 
 
-def lstm_online_learning_fine_tuning(example_data):
-    """Test OnlineLearningFineTuningWorkflow: load and fine-tune existing model."""
-    csv_file = example_data / "shahala_data.csv"
-    initial_csv = example_data / "aquaponics_smoke_online_learning_initial_ft.csv"
-    recent_csv = example_data / "aquaponics_smoke_online_learning_recent_ft.csv"
-    plot_file = example_data / "aquaponics_pred_vs_expected_online_finetune_predicted.png"
-    parity_plot_file = example_data / "aquaponics_parity_plot_online_finetune_predicted.png"
-    scaled_plot_file = example_data / "aquaponics_scaled_plot_online_finetune_predicted.png"
-    model_file = example_data / "aquaponics_lstm_model_online_learning_ft.keras"
+def lstm_online_learning_fine_tuning(selected):
+    """Run LstmOnlineLearningFineTuningWorkflow: load and fine-tune existing model."""
+    csv_file =  "osi-hackathon/data/homogenized_sensor_data.csv"
+    initial_csv = "osi-hackathon/data/aquaponics_smoke_online_learning_initial_ft.csv"
+    recent_csv = "osi-hackathon/data/aquaponics_smoke_online_learning_recent_ft.csv"
+    plot_file = "osi-hackathon/data/aquaponics_pred_vs_expected_online_finetune_predicted.png"
+    parity_plot_file = "osi-hackathon/data/aquaponics_parity_plot_online_finetune_predicted.png"
+    scaled_plot_file = "osi-hackathon/data/aquaponics_scaled_plot_online_finetune_predicted.png"
+    model_file = "osi-hackathon/data/aquaponics_lstm_model_online_learning_ft.keras"
     
-    selected = ['Time', 'ec_calibrated']
+
     full_data = pd.read_csv(csv_file, usecols=selected).head(500)
     
     # Split: first 400 for initial training, last 100 for fine-tuning
@@ -132,7 +126,7 @@ def lstm_online_learning_fine_tuning(example_data):
     )
     
     assert result_initial["model_existed"] is False
-    assert model_file.exists()
+    assert Path(model_file).exists()
     
     # Step 2: Fine-tune with recent data
     result_finetune = workflow.run(
@@ -150,22 +144,21 @@ def lstm_online_learning_fine_tuning(example_data):
     assert result_finetune["loss"] >= 0
     
     # Cleanup
-    model_file.unlink()
-    initial_csv.unlink()
-    recent_csv.unlink()
+    Path(model_file).unlink()
+    Path(initial_csv).unlink()
+    Path(recent_csv).unlink()
 
 
-def lstm_online_learning_future_predictions(example_data):
-    """Test OnlineLearningFineTuningWorkflow with future forecasting."""
-    csv_file = example_data / "homogenized_sensor_data.csv"
-    smoke_csv = example_data / "aquaponics_smoke_online_learning_forecast_ft.csv"
-    plot_file = example_data / "aquaponics_pred_vs_expected_online_future_predicted.png"
-    parity_plot_file = example_data / "aquaponics_parity_plot_online_future_predicted.png"
-    scaled_plot_file = example_data / "aquaponics_scaled_plot_online_future_predicted.png"
-    future_plot_file = example_data / "aquaponics_future_plot_online_future_predicted.png"
-    model_file = example_data / "aquaponics_lstm_model_online_learning_forecast_ft.keras"
+def lstm_online_learning_future_predictions(selected):
+    """Run LstmOnlineLearningFineTuningWorkflow with future forecasting."""
+    csv_file =  "osi-hackathon/data/homogenized_sensor_data.csv"
+    smoke_csv = "osi-hackathon/data/aquaponics_smoke_online_learning_forecast_ft.csv"
+    plot_file = "osi-hackathon/data/aquaponics_pred_vs_expected_online_future_predicted.png"
+    parity_plot_file = "osi-hackathon/data/aquaponics_parity_plot_online_future_predicted.png"
+    scaled_plot_file = "osi-hackathon/data/aquaponics_scaled_plot_online_future_predicted.png"
+    future_plot_file = "osi-hackathon/data/aquaponics_future_plot_online_future_predicted.png"
+    model_file = "osi-hackathon/data/aquaponics_lstm_model_online_learning_forecast_ft.keras"
     
-    selected = ['Time', 'ec_calibrated']
     pd.read_csv(csv_file, usecols=selected).head(500).to_csv(smoke_csv, index=False)
     
     data_prep_config = DataPrepConfig(train_split=0.8, timesteps=75)
@@ -217,5 +210,15 @@ def lstm_online_learning_future_predictions(example_data):
     assert not np.isinf(future_predictions).any()
     
     # Cleanup
-    model_file.unlink()
-    smoke_csv.unlink()
+    Path(model_file).unlink()
+    Path(smoke_csv).unlink()
+    Path(plot_file).unlink()
+    Path(parity_plot_file).unlink()
+    Path(scaled_plot_file).unlink()
+    Path(future_plot_file).unlink()     
+
+
+selected = ['Time', 'ec_calibrated', 'orp_raw_mV', 'ph_cal', 'pressure_temperature_C', 'temp_sensor_C_ph',"pressure_temperature_C_{SSID=\"YoungArtsDammweg_SCF\",_git=\"ffdb268\",_mac=\"48:E7:29:43:32:17\",_modbus=\"4\",_name=\"measurements\"}", 'innen_luft_C', 'Biofilter_temp_C', 'Außen_temp_C', 'dwc_temp_C']
+lstm_online_learning_initial_training(selected)
+lstm_online_learning_fine_tuning(selected)
+lstm_online_learning_future_predictions(selected)
