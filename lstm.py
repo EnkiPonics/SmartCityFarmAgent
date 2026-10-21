@@ -45,8 +45,8 @@ def lstm_online_learning_initial_training(selected):
         file_path=str(smoke_csv),
         model_path=str(model_file),
         input_shape=(20, 1),
-        target_column="ec_calibrated",
-        x_axis_column="Time",
+        target_column=selected[1],
+        x_axis_column=selected[0],
     )
     
     # Assertions
@@ -61,8 +61,8 @@ def lstm_online_learning_initial_training(selected):
     X_train, X_test, y_train, y_test, _, _, _, _ = load_and_process_data(
         str(smoke_csv),
         data_prep_config,
-        target_column="ec_calibrated",
-        x_axis_column="Time",
+        target_column=selected[1],
+        x_axis_column=selected[0],
     )
     
     predictions = result["model"].predict(X_test, verbose=0)
@@ -133,8 +133,8 @@ def lstm_online_learning_fine_tuning(selected):
         file_path=str(recent_csv),
         model_path=str(model_file),
         input_shape=(15, 1),
-        target_column="ec_calibrated",
-        x_axis_column="Time",
+        target_column=selected[1],
+        x_axis_column=selected[0],
     )
     
     # Assertions
@@ -189,8 +189,8 @@ def lstm_online_learning_future_predictions(selected):
         file_path=str(smoke_csv),
         model_path=str(model_file),
         input_shape=(15, 1),
-        target_column="ec_calibrated",
-        x_axis_column="Time",
+        target_column=selected[1],
+        x_axis_column=selected[0],
     )
     
     assert result["model_existed"] is False
@@ -200,8 +200,8 @@ def lstm_online_learning_future_predictions(selected):
         file_path=str(smoke_csv),
         model_path=str(model_file),
         n_future_steps=n_future_steps,
-        target_column="ec_calibrated",
-        x_axis_column="Time",
+        target_column=selected[1],
+        x_axis_column=selected[0],
     )
     
     # Assertions
@@ -218,7 +218,9 @@ def lstm_online_learning_future_predictions(selected):
     Path(future_plot_file).unlink()     
 
 
-selected = ['Time', 'ec_calibrated', 'orp_raw_mV', 'ph_cal', 'pressure_temperature_C', 'temp_sensor_C_ph',"pressure_temperature_C_{SSID=\"YoungArtsDammweg_SCF\",_git=\"ffdb268\",_mac=\"48:E7:29:43:32:17\",_modbus=\"4\",_name=\"measurements\"}", 'innen_luft_C', 'Biofilter_temp_C', 'Außen_temp_C', 'dwc_temp_C']
-lstm_online_learning_initial_training(selected)
-lstm_online_learning_fine_tuning(selected)
-lstm_online_learning_future_predictions(selected)
+target_list = ['Time', 'ec_calibrated', 'orp_raw_mV', 'ph_cal', 'pressure_temperature_C', 'temp_sensor_C_ph',"pressure_temperature_C_{SSID=\"YoungArtsDammweg_SCF\",_git=\"ffdb268\",_mac=\"48:E7:29:43:32:17\",_modbus=\"4\",_name=\"measurements\"}", 'innen_luft_C', 'Biofilter_temp_C', 'Außen_temp_C', 'dwc_temp_C']
+for target in target_list[1:]:
+    selected = [target_list[0], target]
+    lstm_online_learning_initial_training(selected)
+    lstm_online_learning_fine_tuning(selected)
+    lstm_online_learning_future_predictions(selected)
