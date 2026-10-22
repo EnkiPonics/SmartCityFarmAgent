@@ -1,0 +1,1 @@
+[{'x': 1630.0, 'y': 1193.5, 'width': 196.0, 'height': 209.0, 'confidence': 0.7888638973236084, 'class': 'Spider Mites', 'class_id': 8, 'detection_id': '5a9cfb01-c2cf-4d3a-b9ce-e725166d9a4e'}]
