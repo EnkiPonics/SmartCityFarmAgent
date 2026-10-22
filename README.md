@@ -299,7 +299,7 @@ OPENROUTER_KEY=your_api_key_here
 
 ## 🌱 Contribution
 
-Built for **OSI Hackathon 2026** by @QuantumChemist.
+Built for **OSI Hackathon 2026** by [@QuantumChemist](https://github.com/QuantumChemist)
 
 Data partnership: **SmartCityFarm e.V. Berlin**
 
@@ -307,5 +307,5 @@ Data partnership: **SmartCityFarm e.V. Berlin**
 
 ## 📄 License
 
-OSI Hackathon 2026 Submission - SmartCityFarm Agent by EnkiPonics
+OSI Hackathon 2026 Submission - SmartCityFarm Agent by EnkiPonics written by [@QuantumChemist](https://github.com/QuantumChemist)
 
