@@ -23,6 +23,7 @@ print(result)
 │  ├── data_input/*.csv                   │
 │  ├── lstm_output/*.csv                  │
 │  ├── lstm_output/*.png                  │
+│  ├──yolo_output/*.txt
 │  ├── bn_classification_output/*.json    │
 │  └── bn_classification_output/*.png     │
 └──────────────┬──────────────────────────┘
