@@ -20,6 +20,8 @@ dependencies = [
   "matplotlib>=3.8",
   "python-dotenv>=1.0",
   "pillow>=10.0",
+  "fastapi>=0.104",
+  "uvicorn>=0.24",
 ]
 
 [project.optional-dependencies]
