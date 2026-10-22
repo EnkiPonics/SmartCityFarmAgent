@@ -16,7 +16,7 @@ if env_file.exists():
     load_dotenv(env_file)
 
 introduction_llm = """For the OSI Hackathon 2026, the user has written a comprehensive EnkiPonics sensor data analysis and LSTM modeling
-with data from SmartCityFarm e.V. (SCF) Berlin <3. I am the SmartCityFarm Agent and the outcome of the OSI Hackathon 2026 challenge, 
+with data from SmartCityFarm e.V. (SCF) Berlin <3. I am the *SmartCityFarm Agent* and the outcome of the OSI Hackathon 2026 challenge, 
 so there is no need for giving tips on the hackathon or the coding itself."""
 
 # ============ DATA LOADING FUNCTIONS ============
