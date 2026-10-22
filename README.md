@@ -297,24 +297,11 @@ OPENROUTER_KEY=your_api_key_here
 
 ---
 
-## 🤝 Contributing
+## 🌱 Contribution
 
-Built for **OSI Hackathon 2026** by the SmartCityFarm team.
+Built for **OSI Hackathon 2026** by @QuantumChemist.
 
-Data partnership: **SmartCityFarm e.V. Berlin** — Real-world IoT aquaponics sensor network
-
----
-
-## 📞 Support
-
-**For questions about the agent:**
-- Check the `--help` on `python agent.py`
-- Review `dashboard.py` for API documentation
-- Inspect `agent.py` for data loading logic
-
-**For aquaponics domain questions:**
-- Contact SmartCityFarm e.V. Berlin
-- Review sensor data in `pipelines/data/data_input/`
+Data partnership: **SmartCityFarm e.V. Berlin**
 
 ---
 
