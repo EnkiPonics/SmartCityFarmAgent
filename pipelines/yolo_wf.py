@@ -30,9 +30,9 @@ def detection_integration():
     )
     
     # Run the detection
-    result = workflow.run("data/PXL_20260922_124425712.jpg")
+    result = workflow.run("data/data-input/PXL_20260922_124425712.jpg")
 
-    with open("data/Tomato_Plant_Disease_Result.txt", "w") as f:
+    with open("data/yolo-output/Tomato_Plant_Disease_Result.txt", "w") as f:
         f.write(str(result))
     
     # Verify result structure - Roboflow Serverless Cloud API returns predictions
@@ -43,7 +43,7 @@ def detection_integration():
     predictions = result.get("predictions", [])
 
     # write the predictions to a file for inspection
-    with open("data/Tomato_Plant_Disease_Predictions.txt", "w") as f:
+    with open("data/yolo-output/Tomato_Plant_Disease_Predictions.txt", "w") as f:
         f.write(str(predictions))
     
     # Get detection info
