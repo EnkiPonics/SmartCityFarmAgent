@@ -133,7 +133,7 @@ def build_context_message(data_context: dict) -> str:
 def agent_chat(
     history,
     model: str = "nvidia/nemotron-3-ultra-550b-a55b:free",
-    max_tokens=2000,
+    max_tokens=50000,
     text="Your initial text here",
     include_pipeline_data: bool = True,
 ):
