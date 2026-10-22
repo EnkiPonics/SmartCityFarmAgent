@@ -70,6 +70,20 @@ async def get_plots():
         "plots": plots
     }
 
+@app.get("/api/example-analysis")
+async def get_example_analysis():
+    """Get fallback example analysis content"""
+    example_file = Path(__file__).parent / "example_analysis.md"
+    if not example_file.exists():
+        raise HTTPException(status_code=404, detail="Example analysis not found")
+    
+    try:
+        content = example_file.read_text(encoding="utf-8")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Could not read example analysis: {e}") from e
+    
+    return {"content": content}
+
 @app.post("/api/analyze")
 async def run_analysis(request: dict):
     """
