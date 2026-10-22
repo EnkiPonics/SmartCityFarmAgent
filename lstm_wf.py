@@ -15,12 +15,12 @@ from lstm.src.jobs import load_lstm_model, load_and_process_data
 
 def lstm_online_learning_initial_training(selected):
     """Run LstmOnlineLearningFineTuningWorkflow: initial model training."""
-    csv_file = f"osi-hackathon/data/homogenized_sensor_data.csv"
-    smoke_csv = f"osi-hackathon/data/aquaponics_{selected[1]}_online_learning_initial.csv"
-    plot_file = f"osi-hackathon/data/aquaponics_{selected[1]}_pred_vs_expected_online_ini_predicted.png"
-    parity_plot_file = f"osi-hackathon/data/aquaponics_{selected[1]}_parity_plot_online_ini_predicted.png"
-    scaled_plot_file = f"osi-hackathon/data/aquaponics_{selected[1]}_scaled_plot_online_ini_predicted.png"
-    model_file = f"osi-hackathon/data/aquaponics_{selected[1]}_lstm_model_online_learning.keras"
+    csv_file = "data/homogenized_sensor_data.csv"
+    smoke_csv = f"data/aquaponics_{selected[1]}_online_learning_initial.csv"
+    plot_file = f"data/aquaponics_{selected[1]}_pred_vs_expected_online_ini_predicted.png"
+    parity_plot_file = f"data/aquaponics_{selected[1]}_parity_plot_online_ini_predicted.png"
+    scaled_plot_file = f"data/aquaponics_{selected[1]}_scaled_plot_online_ini_predicted.png"
+    model_file = f"data/aquaponics_{selected[1]}_lstm_model_online_learning.keras"
     
     pd.read_csv(csv_file, usecols=selected).head(500).to_csv(smoke_csv, index=False)
     
@@ -81,13 +81,13 @@ def lstm_online_learning_initial_training(selected):
 
 def lstm_online_learning_fine_tuning(selected):
     """Run LstmOnlineLearningFineTuningWorkflow: load and fine-tune existing model."""
-    csv_file =  "osi-hackathon/data/homogenized_sensor_data.csv"
-    initial_csv = f"osi-hackathon/data/aquaponics_{selected[1]}_online_learning_initial_ft.csv"
-    recent_csv = f"osi-hackathon/data/aquaponics_{selected[1]}_online_learning_recent_ft.csv"
-    plot_file = f"osi-hackathon/data/aquaponics_{selected[1]}_pred_vs_expected_online_finetune_predicted.png"
-    parity_plot_file = f"osi-hackathon/data/aquaponics_{selected[1]}_parity_plot_online_finetune_predicted.png"
-    scaled_plot_file = f"osi-hackathon/data/aquaponics_{selected[1]}_scaled_plot_online_finetune_predicted.png"
-    model_file = f"osi-hackathon/data/aquaponics_{selected[1]}_lstm_model_online_learning_ft.keras"
+    csv_file =  "data/homogenized_sensor_data.csv"
+    initial_csv = f"data/aquaponics_{selected[1]}_online_learning_initial_ft.csv"
+    recent_csv = f"data/aquaponics_{selected[1]}_online_learning_recent_ft.csv"
+    plot_file = f"data/aquaponics_{selected[1]}_pred_vs_expected_online_finetune_predicted.png"
+    parity_plot_file = f"data/aquaponics_{selected[1]}_parity_plot_online_finetune_predicted.png"
+    scaled_plot_file = f"data/aquaponics_{selected[1]}_scaled_plot_online_finetune_predicted.png"
+    model_file = f"data/aquaponics_{selected[1]}_lstm_model_online_learning_ft.keras"
     
 
     full_data = pd.read_csv(csv_file, usecols=selected).head(500)
@@ -156,13 +156,13 @@ def lstm_online_learning_fine_tuning(selected):
 
 def lstm_online_learning_future_predictions(selected):
     """Run LstmOnlineLearningFineTuningWorkflow with future forecasting."""
-    csv_file =  "osi-hackathon/data/homogenized_sensor_data.csv"
-    smoke_csv = f"osi-hackathon/data/aquaponics_{selected[1]}_online_learning_forecast_ft.csv"
-    plot_file = f"osi-hackathon/data/aquaponics_{selected[1]}_pred_vs_expected_online_future_predicted.png"
-    parity_plot_file = f"osi-hackathon/data/aquaponics_{selected[1]}_parity_plot_online_future_predicted.png"
-    scaled_plot_file = f"osi-hackathon/data/aquaponics_{selected[1]}_scaled_plot_online_future_predicted.png"
-    future_plot_file = f"osi-hackathon/data/aquaponics_{selected[1]}_future_plot_online_future_predicted.png"
-    model_file = f"osi-hackathon/data/aquaponics_{selected[1]}_lstm_model_online_learning_forecast_ft.keras"
+    csv_file =  "data/homogenized_sensor_data.csv"
+    smoke_csv = f"data/aquaponics_{selected[1]}_online_learning_forecast_ft.csv"
+    plot_file = f"data/aquaponics_{selected[1]}_pred_vs_expected_online_future_predicted.png"
+    parity_plot_file = f"data/aquaponics_{selected[1]}_parity_plot_online_future_predicted.png"
+    scaled_plot_file = f"data/aquaponics_{selected[1]}_scaled_plot_online_future_predicted.png"
+    future_plot_file = f"data/aquaponics_{selected[1]}_future_plot_online_future_predicted.png"
+    model_file = f"data/aquaponics_{selected[1]}_lstm_model_online_learning_forecast_ft.keras"
     
     pd.read_csv(csv_file, usecols=selected).head(500).to_csv(smoke_csv, index=False)
     
