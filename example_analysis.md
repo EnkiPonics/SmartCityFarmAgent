@@ -12,7 +12,7 @@ OpenRouter Model Used: nvidia/nemotron-3-ultra-550b-a55b:free
 
 ## 📊 Executive Summary
 
-Your EnkiPonics system at YoungArtsDammweg is **operating stably** with strong LSTM predictive capabilities (R² > 0.95 for temperature/EC), but shows **critical sensor calibration issues** (ORP) and **biological stress indicators** (Spider Mites, low temperature risk). The system is ready for automation upgrades but requires immediate sensor maintenanceand pest intervention.
+Your EnkiPonics system at Dammweg is **operating stably** with strong LSTM predictive capabilities (R² > 0.95 for temperature/EC), but shows **critical sensor calibration issues** (ORP) and **biological stress indicators** (Spider Mites, low temperature risk). The system is ready for automation upgrades but requires immediate sensor maintenanceand pest intervention.
 
 ---
 
