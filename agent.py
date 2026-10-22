@@ -62,6 +62,22 @@ def load_json_data(json_path: Path) -> str:
     except Exception as e:
         return f"\n❌ Error reading {json_path.name}: {str(e)}\n"
 
+def load_txt_data(txt_path: Path) -> str:
+    """Load TXT data (YOLO results, predictions, etc.)."""
+    try:
+        with open(txt_path, 'r') as f:
+            content = f.read()
+        # If it looks like JSON, format it nicely
+        try:
+            parsed = json.loads(content)
+            formatted = json.dumps(parsed, indent=2)[:800]
+            return f"\n📄 File: {txt_path.name}\n   Content: {formatted}\n"
+        except:
+            # Regular text - truncate to 500 chars
+            return f"\n📄 File: {txt_path.name}\n   Content: {content[:500]}\n"
+    except Exception as e:
+        return f"\n❌ Error reading {txt_path.name}: {str(e)}\n"
+
 def load_pipeline_data(pipeline_dir: Optional[Path] = None) -> dict:
     """Load all data from pipelines directory."""
     if pipeline_dir is None:
@@ -91,10 +107,14 @@ def load_pipeline_data(pipeline_dir: Optional[Path] = None) -> dict:
         if img_data["type"] == "image":
             data_context["images"].append(img_data)
     
-    # Load classification results
-    data_context["json_data"] += "\n=== CLASSIFICATION RESULTS ===\n"
+    # Load classification results (JSON and TXT)
+    data_context["json_data"] += "\n=== CLASSIFICATION & DETECTION RESULTS ===\n"
     for json_file in sorted(pipeline_dir.glob("*_output/*.json")):
         data_context["json_data"] += load_json_data(json_file)
+    
+    # Load TXT outputs (YOLO predictions, etc.)
+    for txt_file in sorted(pipeline_dir.glob("*_output/*.txt")):
+        data_context["json_data"] += load_txt_data(txt_file)
     
     return data_context
 
