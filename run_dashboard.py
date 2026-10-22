@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Quick start script for EnkiPonics Dashboard
+Quick start script for SmartCityFarm Agent Dashboard
 """
 
 import subprocess
@@ -10,7 +10,7 @@ from pathlib import Path
 
 def main():
     print("="*60)
-    print("EnkiPonics Dashboard Launcher")
+    print("SmartCityFarm Agent Dashboard Launcher")
     print("="*60)
     print()
     

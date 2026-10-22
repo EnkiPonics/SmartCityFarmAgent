@@ -208,6 +208,103 @@
             color: #666;
         }
         
+        .plots-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .plot-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .plot-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .plot-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+        
+        .plot-label {
+            padding: 12px;
+            background: #f8f9fa;
+            border-top: 1px solid #eee;
+        }
+        
+        .plot-label h3 {
+            font-size: 13px;
+            margin: 0;
+            color: #333;
+            word-break: break-word;
+        }
+        
+        .plot-label .category-tag {
+            display: inline-block;
+            font-size: 11px;
+            background: #667eea;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            margin-top: 5px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+        }
+        
+        .modal-content {
+            margin: 5% auto;
+            width: 90%;
+            max-width: 1000px;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #667eea;
+        }
+        
+        .close-modal:hover {
+            color: #5568d3;
+        }
+        
+        .modal-image {
+            width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+        
+        .modal-title {
+            margin-top: 15px;
+            color: #333;
+        }
+        
         .status-item {
             display: flex;
             align-items: center;
@@ -250,7 +347,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>🌱 EnkiPonics Dashboard</h1>
+            <h1>🌱 SmartCityFarm Agent Dashboard</h1>
             <p class="subtitle">OSI Hackathon 2026 | SmartCityFarm e.V. Berlin | Sensor Data Analysis & AI Recommendations</p>
         </header>
         
@@ -311,6 +408,24 @@
                     Run an analysis to see results here
                 </div>
             </div>
+            
+            <div class="card result-panel">
+                <h2>LSTM Predictions & Visualizations</h2>
+                <div class="plots-gallery" id="plotsGallery">
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: #999;">
+                        Loading plots...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <img id="modalImage" class="modal-image">
+            <h3 id="modalTitle" class="modal-title"></h3>
         </div>
     </div>
     
@@ -320,6 +435,7 @@
         // Check API health on load
         window.addEventListener('load', () => {
             checkHealth();
+            loadPlots();  // Load plots when page loads
         });
         
         async function checkHealth() {
@@ -407,6 +523,54 @@
                 sensors: 'Which sensors are performing well and which need attention? Include ORP, turbidity, pressure readings, and temperature across all zones.'
             };
             document.getElementById('questionInput').value = templates[template] || '';
+        }
+        
+        // Load LSTM plots gallery
+        async function loadPlots() {
+            try {
+                const response = await fetch(`${API_BASE}/plots`);
+                const data = await response.json();
+                displayPlots(data.plots);
+            } catch (e) {
+                console.log('Could not load plots:', e);
+            }
+        }
+        
+        function displayPlots(plots) {
+            const gallery = document.getElementById('plotsGallery');
+            if (plots.length === 0) {
+                gallery.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: #999;">No plots available</div>';
+                return;
+            }
+            
+            gallery.innerHTML = plots.map(plot => `
+                <div class="plot-card" onclick="openModal('${plot.base64}', '${plot.filename}')">
+                    <img src="${plot.base64}" class="plot-image" alt="${plot.name}">
+                    <div class="plot-label">
+                        <h3>${plot.filename.replace(/_/g, ' ')}</h3>
+                        <span class="category-tag">${plot.category}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function openModal(base64, title) {
+            const modal = document.getElementById('imageModal');
+            document.getElementById('modalImage').src = base64;
+            document.getElementById('modalTitle').textContent = title.replace(/_/g, ' ');
+            modal.style.display = 'block';
+        }
+        
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside image
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
         }
         
         // Simple markdown rendering (basic support)
