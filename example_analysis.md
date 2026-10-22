@@ -148,19 +148,7 @@ OpenRouter Model Used: nvidia/nemotron-3-ultra-550b-a55b:free
 
 ---
 
-## 8. Open-Science / OSI Hackathon Deliverables
-
-1. **`enkipondics-schema.json`** — CSV/Parquet schema with units, sensor metadata, calibration equations.  
-2. **`data-quality-notebook.ipynb`** — Reproducible audit (Great Expectations + plots).  
-3. **`lstm-tcn-aquaponics/`** — Model zoo: training script, ONNX export, Pi 4 inference benchmark.  
-4. **`ipm-spider-mite-protocol.md`** — Organic-certifiable SOP with timing & sourcing.  
-5. **`thermal-model.dymola` / `.fmu`** — Physics-based DWC heat-loss model for MPC.  
-
-All under **MIT/CC-BY-4.0** with Docker Compose for one-click replay.
-
----
-
-## 9. Key Metrics to Watch Next 30 Days
+## 8. Key Metrics to Watch Next 30 Days
 
 | KPI | Target | Measurement |
 |-----|--------|-------------|
