@@ -33,7 +33,7 @@ The **SmartCityFarm Agent Dashboard** provides a professional web interface for 
   - Future Predictions
   - Plant Health & Disease Analysis
   - Sensor Data Deep-Dive
-- **LSTM Predictions & Visualizations** — Interactive gallery of all 18 plots from your analysis pipeline
+- **Predictions & Visualizations** — Interactive gallery of all 18 plots from your analysis pipeline
 - **Full-Screen Plot Viewer** — Click any plot to view at full resolution
 - **Real-Time Status** — API health indicator and connection status
 
