@@ -1,0 +1,21 @@
+{
+  "low_temperature_classification": {
+    "target_threshold": "< 15\u00b0C",
+    "posterior_probabilities": {
+      "0": 0.7164441269898553,
+      "1": 0.2835558730101446
+    }
+  },
+  "low_ph_classification": {
+    "target_threshold": "< 7.0",
+    "posterior_probabilities": {
+      "0": 1.0
+    }
+  },
+  "workflow_parameters": {
+    "seed": 42,
+    "draws": 500,
+    "tune": 500,
+    "chains": 2
+  }
+}

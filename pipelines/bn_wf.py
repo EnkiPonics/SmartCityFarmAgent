@@ -68,7 +68,11 @@ class BayesianNetworkClassificationWorkflow:
         self.progressbar = progressbar
         
         if seed is not None:
-            set_global_seed(seed)
+            import os
+            import random
+            os.environ['PYTHONHASHSEED'] = str(seed)
+            random.seed(seed)
+            np.random.seed(seed)
 
     def _extract_temperature_features(self, data: pd.DataFrame) -> pd.DataFrame:
         """Extract temperature-related features from homogenized data."""
@@ -514,15 +518,21 @@ if __name__ == '__main__':
     # Example usage
     workflow = BayesianNetworkClassificationWorkflow(
         seed=42,
-        draws=1000,
-        tune=1000,
+        draws=500,      # Reduced for faster demo
+        tune=500,
         chains=2,
-        progressbar=True,
+        progressbar=False,  # Disable on Windows to avoid encoding issues
     )
     
+    data_path = Path(__file__).parent.parent / 'osi-hackathon' / 'data' / 'homogenized_sensor_data.csv'
+    if not data_path.exists():
+        data_path = Path(__file__).parent / 'data' / 'homogenized_sensor_data.csv'
+    
+    output_dir = Path(__file__).parent / 'data' / 'bn_classification_output'
+    
     result = workflow.run(
-        data_file='data/homogenized_sensor_data.csv',
-        output_dir='./bn_classification_output',
+        data_file=str(data_path),
+        output_dir=str(output_dir),
         save_models=True,
         save_plots=True,
         save_summary=True,

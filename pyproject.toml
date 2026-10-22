@@ -15,6 +15,9 @@ dependencies = [
   "tensorflow>=2.16",
   "scikit-learn>=1.5",
   "keras>=3.0",
+  "pymc>=4.0",
+  "arviz>=0.14",
+  "matplotlib>=3.8",
 ]
 
 [project.optional-dependencies]
