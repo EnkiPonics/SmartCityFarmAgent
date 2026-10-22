@@ -3,7 +3,7 @@
 
 SCF Agent repo for the OSI hackathon 2026
 
-Note: all the ML/AI analyses have been conducted with only 500 data points for resource reasons. With a powerful server, much better results could be achieved.
+Note: all the ML/AI analyses have been conducted with only 500 data points or less for resource reasons. With a powerful server, much better results could be achieved.
 
 ---
 
