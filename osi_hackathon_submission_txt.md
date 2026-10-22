@@ -6,7 +6,7 @@ EnkiPonics wants to automate and enhance aquaponic plant operations to improve c
 
 ## Results
 
-The SmartCityFarm Agent come with a command line and dashboard interface. The dashboard is a convenient way for the user to access the agent.
+The SmartCityFarm Agent comes with a command line and dashboard interface. The dashboard is a convenient way for the user to access the agent.
 
 ## Next steps
 
