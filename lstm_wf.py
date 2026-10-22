@@ -17,9 +17,9 @@ def lstm_online_learning_initial_training(selected):
     """Run LstmOnlineLearningFineTuningWorkflow: initial model training."""
     csv_file = "data/homogenized_sensor_data.csv"
     smoke_csv = f"data/aquaponics_{selected[1]}_online_learning_initial.csv"
-    plot_file = f"data/aquaponics_{selected[1]}_pred_vs_expected_online_ini_predicted.png"
+    #plot_file = f"data/aquaponics_{selected[1]}_pred_vs_expected_online_ini_predicted.png"
     parity_plot_file = f"data/aquaponics_{selected[1]}_parity_plot_online_ini_predicted.png"
-    scaled_plot_file = f"data/aquaponics_{selected[1]}_scaled_plot_online_ini_predicted.png"
+    #scaled_plot_file = f"data/aquaponics_{selected[1]}_scaled_plot_online_ini_predicted.png"
     model_file = f"data/aquaponics_{selected[1]}_lstm_model_online_learning.keras"
     
     pd.read_csv(csv_file, usecols=selected).head(500).to_csv(smoke_csv, index=False)
@@ -40,9 +40,9 @@ def lstm_online_learning_initial_training(selected):
         training_config=training_config,
         fine_tune_epochs=5,
         dropout_rate=0.2,
-        plot_output_path=plot_file,
+        #plot_output_path=plot_file,
         parity_plot_output_path=parity_plot_file,
-        scaled_plot_output_path=scaled_plot_file,
+        #scaled_plot_output_path=scaled_plot_file,
         seed=42,
     )
     # First run: initialize and train new model
@@ -84,9 +84,9 @@ def lstm_online_learning_fine_tuning(selected):
     csv_file =  "data/homogenized_sensor_data.csv"
     initial_csv = f"data/aquaponics_{selected[1]}_online_learning_initial_ft.csv"
     recent_csv = f"data/aquaponics_{selected[1]}_online_learning_recent_ft.csv"
-    plot_file = f"data/aquaponics_{selected[1]}_pred_vs_expected_online_finetune_predicted.png"
+    #plot_file = f"data/aquaponics_{selected[1]}_pred_vs_expected_online_finetune_predicted.png"
     parity_plot_file = f"data/aquaponics_{selected[1]}_parity_plot_online_finetune_predicted.png"
-    scaled_plot_file = f"data/aquaponics_{selected[1]}_scaled_plot_online_finetune_predicted.png"
+    #scaled_plot_file = f"data/aquaponics_{selected[1]}_scaled_plot_online_finetune_predicted.png"
     model_file = f"data/aquaponics_{selected[1]}_lstm_model_online_learning_ft.keras"
     
 
@@ -115,9 +115,9 @@ def lstm_online_learning_fine_tuning(selected):
         training_config=training_config,
         fine_tune_epochs=5,
         dropout_rate=0.2,
-        plot_output_path=plot_file,
+        #plot_output_path=plot_file,
         parity_plot_output_path=parity_plot_file,
-        scaled_plot_output_path=scaled_plot_file,
+        #scaled_plot_output_path=scaled_plot_file,
         seed=42,
     )
     
@@ -157,12 +157,12 @@ def lstm_online_learning_fine_tuning(selected):
 def lstm_online_learning_future_predictions(selected):
     """Run LstmOnlineLearningFineTuningWorkflow with future forecasting."""
     csv_file =  "data/homogenized_sensor_data.csv"
-    smoke_csv = f"data/aquaponics_{selected[1]}_online_learning_forecast_ft.csv"
-    plot_file = f"data/aquaponics_{selected[1]}_pred_vs_expected_online_future_predicted.png"
+    smoke_csv = f"data/aquaponics_{selected[1]}_online_learning_forecast.csv"
+    #plot_file = f"data/aquaponics_{selected[1]}_pred_vs_expected_online_future_predicted.png"
     parity_plot_file = f"data/aquaponics_{selected[1]}_parity_plot_online_future_predicted.png"
-    scaled_plot_file = f"data/aquaponics_{selected[1]}_scaled_plot_online_future_predicted.png"
+    #scaled_plot_file = f"data/aquaponics_{selected[1]}_scaled_plot_online_future_predicted.png"
     future_plot_file = f"data/aquaponics_{selected[1]}_future_plot_online_future_predicted.png"
-    model_file = f"data/aquaponics_{selected[1]}_lstm_model_online_learning_forecast_ft.keras"
+    model_file = f"data/aquaponics_{selected[1]}_lstm_model_online_learning_forecast.keras"
     
     pd.read_csv(csv_file, usecols=selected).head(500).to_csv(smoke_csv, index=False)
     
@@ -182,9 +182,9 @@ def lstm_online_learning_future_predictions(selected):
         training_config=training_config,
         fine_tune_epochs=5,
         dropout_rate=0.2,
-        plot_output_path=plot_file,
+        #plot_output_path=plot_file,
         parity_plot_output_path=parity_plot_file,
-        scaled_plot_output_path=scaled_plot_file,   
+        #scaled_plot_output_path=scaled_plot_file,   
         future_plot_output_path=future_plot_file,
         seed=42,
     )
@@ -223,6 +223,6 @@ def lstm_online_learning_future_predictions(selected):
 target_list = ['Time', 'ec_calibrated']#, 'orp_raw_mV', 'ph_cal', 'pressure_temperature_C', 'temp_sensor_C_ph',"pressure_temperature_C_{SSID=\"YoungArtsDammweg_SCF\",_git=\"ffdb268\",_mac=\"48:E7:29:43:32:17\",_modbus=\"4\",_name=\"measurements\"}", 'innen_luft_C', 'Biofilter_temp_C', 'Außen_temp_C', 'dwc_temp_C']
 for target in target_list[1:]:
     selected = [target_list[0], target]
-    lstm_online_learning_initial_training(selected)
-    lstm_online_learning_fine_tuning(selected)
+    #lstm_online_learning_initial_training(selected)
+    #lstm_online_learning_fine_tuning(selected)
     lstm_online_learning_future_predictions(selected)
