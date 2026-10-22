@@ -35,22 +35,26 @@ async def get_data_summary():
 
 @app.get("/api/plots")
 async def get_plots():
-    """Get all available LSTM and analysis plots"""
+    """Get all available LSTM and analysis plots (excluding parity plots)"""
     plots = []
     pipeline_dir = Path(__file__).parent / "pipelines" / "data"
     
     if not pipeline_dir.exists():
         return {"plots": []}
     
-    # Get all PNG files from output directories
+    # Get all PNG files from output directories, excluding parity plots
     for png_file in sorted(pipeline_dir.glob("*_output/*.png")):
+        # Skip parity plots
+        if "parity_plot" in png_file.name:
+            continue
+            
         try:
             with open(png_file, 'rb') as f:
                 img_data = base64.b64encode(f.read()).decode('utf-8')
             
             # Parse filename to categorize
             name = png_file.name
-            category = "LSTM" if "future_plot" in name or "parity_plot" in name else "Classification"
+            category = "LSTM" if "future_plot" in name else "Classification"
             
             plots.append({
                 "name": name,
