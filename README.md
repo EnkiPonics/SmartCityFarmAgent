@@ -316,7 +316,7 @@ OPENROUTER_KEY=your_api_key_here
 
 Built for **OSI Hackathon 2026** by [@QuantumChemist](https://github.com/QuantumChemist)
 
-Data partnership: **SmartCityFarm e.V. Berlin**
+Data provider: **SmartCityFarm e.V. Berlin**
 
 ---
 
