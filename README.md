@@ -55,6 +55,14 @@ Toggle pipeline data inclusion for faster results.
 
 ---
 
+## Demo video
+
+You can watch our demo video 
+
+[![demo](https://img.youtube.com/vi/5-UuCt0cpuA/0.jpg)](https://youtu.be/5-UuCt0cpuA) 
+
+on YouTube!
+
 ## Python API Usage
 
 ### Simple Usage - Automatically Loads All Pipeline Data
