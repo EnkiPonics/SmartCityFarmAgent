@@ -1,10 +1,15 @@
 # SmartCityFarm Agent by EnkiPonics
 **OSI Hackathon 2026** — AI-powered aquaponics system analysis & optimization powered by sensor fusion, LSTM forecasting, and computer vision
 
-SCF Agent repo for the OSI hackathon 2026
-
 Note: all the ML/AI analyses have been conducted with only 500 data points or less for resource reasons. With a powerful server, much better results could be achieved.
 
+### Project Status & IP Disclaimer
+
+**This project is a standalone, independent proof-of-concept (PoC) developed exclusively by EnkiPonics during the OSI Hackathon 2026.** 
+
+* **No Commissioned Work:** This software was NOT built on behalf of, by order of, or in the financial interest of SmartCityFarm e.V. or any other third party.
+* **Data Cooperation Only:** SmartCityFarm e.V. acted solely as an open-data provider. There are no contractual obligations, no transfer of intellectual property (IP), and no third-party commercial interests involved.
+* **Ownership:** All architecture, code logic, and conceptual frameworks developed here remain the independent property and prior work of the EnkiPonics founding team.
 ---
 
 ## 🚀 Quick Start
